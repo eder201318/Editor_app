@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shorts Factory - God Mode Anti-Bloqueio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilo para a barra de rolagem personalizada */
+        .custom-scroll::-webkit-scrollbar { width: 4px; sm:width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #1f2937; border-radius: 8px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 8px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-3 sm:p-4">
+
+    <!-- Adaptámos o padding e border-radius para ecrãs menores -->
+    <div class="bg-gray-800 p-5 sm:p-8 rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-3xl border border-gray-700">
+        
+        <div class="text-center mb-5 sm:mb-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-blue-500 mb-1 sm:mb-2 flex items-center justify-center flex-wrap gap-2">
+                Shorts Factory 
+                <span class="text-[10px] sm:text-xs bg-red-600 text-white px-2 py-0.5 sm:py-1 rounded-full whitespace-nowrap">GOD MODE</span>
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm">Destruição Completa de Assinatura Digital (Content ID)</p>
+        </div>
+
+        <form id="uploadForm" class="space-y-5 sm:space-y-6">
+            <!-- Zona de Upload otimizada para toque -->
+            <div id="dropZone" class="border-2 border-dashed border-gray-600 rounded-xl p-4 sm:p-6 text-center hover:border-blue-500 transition-colors cursor-pointer relative bg-gray-900/50">
+                <input type="file" id="videoFile" accept="video/mp4,video/x-m4v,video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10 mx-auto text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <p class="text-gray-300 font-medium text-base sm:text-lg px-2" id="fileName">Toque para escolher ou arraste um vídeo</p>
+                <p class="text-gray-500 text-[11px] sm:text-xs mt-1">Apenas MP4. O original não será guardado.</p>
+            </div>
+
+            <!-- Painel de Opções (Altura dinâmica para mobile) -->
+            <div class="bg-gray-900/50 p-4 sm:p-5 rounded-xl border border-gray-700 max-h-[55vh] sm:max-h-80 overflow-y-auto custom-scroll">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    
+                    <!-- Coluna 1: Modificações Visuais e Estruturais -->
+                    <div class="space-y-1 sm:space-y-2">
+                        <h3 class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2 border-b border-gray-700 pb-1 sticky top-0 bg-gray-900/90 z-10 py-1">Filtros Visuais</h3>
+                        
+                        <!-- Checkboxes com alvos de toque maiores (w-5 h-5 e py-1.5) -->
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optEspelhar" checked class="w-5 h-5 sm:w-4 sm:h-4 text-blue-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Espelhar Vídeo (H-Flip)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optZoom" checked class="w-5 h-5 sm:w-4 sm:h-4 text-blue-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Crop Dinâmico (Zoom de 5%)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optCores" checked class="w-5 h-5 sm:w-4 sm:h-4 text-blue-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Correção de Cores (+Brilho/Sat)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optMatiz" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Rotação de Matiz (Hue Shift)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optRotacao" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Rotação Milimétrica (1 Grau)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optRuido" checked class="w-5 h-5 sm:w-4 sm:h-4 text-blue-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Ruído Visual (Film Grain)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optFantasma" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Sobreposição Fantasma (1%)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optVinheta" checked class="w-5 h-5 sm:w-4 sm:h-4 text-blue-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Vinheta Escura (Bordas)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optMescla" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Mescla de Quadros (Tblend)</span>
+                        </label>
+                    </div>
+
+                    <!-- Coluna 2: Áudio e Core -->
+                    <div class="space-y-1 sm:space-y-2 mt-4 md:mt-0">
+                        <h3 class="text-xs font-bold text-green-400 uppercase tracking-wider mb-2 border-b border-gray-700 pb-1 sticky top-0 bg-gray-900/90 z-10 py-1">Áudio & Metadados</h3>
+                        
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optVelocidade" checked class="w-5 h-5 sm:w-4 sm:h-4 text-green-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Acelerar Vídeo/Áudio (+5%)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optPitch" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Pitch Shift (+Agudo/Disfarce)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optEQ" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Corte de Frequências (EQ)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optEco" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Micro-Eco (Reverb Oculto)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optInversaoAudio" checked class="w-5 h-5 sm:w-4 sm:h-4 text-red-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Inverter Estéreo (L/R)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optAudioFundo" checked class="w-5 h-5 sm:w-4 sm:h-4 text-green-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Mix: Ruído Marrom (Fundo)</span>
+                        </label>
+                        
+                        <div class="pt-3"></div>
+                        <h3 class="text-xs font-bold text-yellow-400 uppercase tracking-wider mb-2 border-b border-gray-700 pb-1 sticky top-0 bg-gray-900/90 z-10 py-1">Estrutura (Core)</h3>
+
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optMetadados" checked class="w-5 h-5 sm:w-4 sm:h-4 text-yellow-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Aniquilar Metadados Originais</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optFPS" checked class="w-5 h-5 sm:w-4 sm:h-4 text-yellow-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Forçar Taxa de Frames (29.5fps)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group py-1.5">
+                            <input type="checkbox" id="optCorte" checked class="w-5 h-5 sm:w-4 sm:h-4 text-yellow-500 bg-gray-700 border-gray-600 rounded">
+                            <span class="text-gray-300 text-sm group-hover:text-white transition-colors">Cortar 1º Segundo do Vídeo</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 sm:py-4 px-4 rounded-xl transition-colors shadow-lg shadow-blue-500/30 text-base sm:text-lg uppercase tracking-wider">
+                Iniciar Processamento
+            </button>
+        </form>
+
+        <!-- Área de Estado -->
+        <div id="statusArea" class="hidden mt-6 sm:mt-8 text-center space-y-4">
+            <div id="loadingSpinner" class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-t-2 border-blue-500 mx-auto"></div>
+            <p id="statusText" class="text-blue-400 font-medium animate-pulse text-base sm:text-lg">A Reconstruir Matriz...</p>
+            
+            <!-- Barra de Progresso Simulada -->
+            <div id="progressBarContainer" class="w-full bg-gray-700 rounded-full h-2.5 sm:h-3 mb-4 overflow-hidden hidden shadow-inner">
+                <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-purple-500 h-2.5 sm:h-3 rounded-full" style="width: 0%; transition: width 0.5s ease-out;"></div>
+            </div>
+            
+            <a id="downloadLink" href="#" class="hidden w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 sm:py-4 px-4 rounded-xl transition-colors shadow-lg shadow-green-500/30 inline-flex items-center justify-center text-base sm:text-lg uppercase tracking-wider">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Descarregar Vídeo
+            </a>
+            <p id="disclaimer" class="hidden text-[10px] sm:text-xs text-gray-500 mt-2">* O ficheiro será apagado automaticamente após 5 minutos para otimizar espaço.</p>
+            
+            <p id="errorText" class="hidden text-red-400 font-medium text-sm sm:text-base bg-red-900/20 p-3 rounded-lg border border-red-800 break-words"></p>
+        </div>
+    </div>
+
+    <!-- Lógica do Frontend -->
+    <script>
+        const fileInput = document.getElementById('videoFile');
+        const fileNameDisplay = document.getElementById('fileName');
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const statusArea = document.getElementById('statusArea');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const statusText = document.getElementById('statusText');
+        const downloadLink = document.getElementById('downloadLink');
+        const errorText = document.getElementById('errorText');
+        const disclaimer = document.getElementById('disclaimer');
+
+        const dropZone = document.getElementById('dropZone');
+        const progressBar = document.getElementById('progressBar');
+        const progressBarContainer = document.getElementById('progressBarContainer');
+
+        // Eventos Drag & Drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('bg-gray-800', 'border-blue-400'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('bg-gray-800', 'border-blue-400'), false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            if(e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                updateFileName(e.dataTransfer.files[0]);
+            }
+        });
+
+        function updateFileName(file) {
+            fileNameDisplay.textContent = file.name;
+            fileNameDisplay.classList.add('text-blue-400', 'text-sm', 'sm:text-base');
+            fileNameDisplay.classList.remove('text-base', 'sm:text-lg');
+        }
+
+        fileInput.addEventListener('change', function() {
+            if(this.files.length) updateFileName(this.files[0]);
+            else {
+                fileNameDisplay.textContent = 'Toque para escolher ou arraste um vídeo';
+                fileNameDisplay.classList.remove('text-blue-400', 'text-sm', 'sm:text-base');
+                fileNameDisplay.classList.add('text-base', 'sm:text-lg');
+            }
+        });
+
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if(!fileInput.files[0]) return;
+
+            submitBtn.classList.add('hidden');
+            statusArea.classList.remove('hidden');
+            loadingSpinner.classList.remove('hidden');
+            progressBarContainer.classList.remove('hidden');
+            statusText.classList.remove('hidden');
+            downloadLink.classList.add('hidden');
+            disclaimer.classList.add('hidden');
+            errorText.classList.add('hidden');
+
+            let progress = 0;
+            progressBar.style.width = '0%';
+            const progressInterval = setInterval(() => {
+                if (progress < 85) progress += Math.random() * 5;
+                else if (progress < 95) progress += Math.random() * 0.5;
+                progressBar.style.width = Math.min(progress, 98) + '%';
+            }, 500);
+
+            const formData = new FormData();
+            formData.append('video', fileInput.files[0]);
+
+            // Adiciona todas as 17 opções dinamicamente ao FormData
+            const options = [
+                'optEspelhar', 'optZoom', 'optCores', 'optMatiz', 'optRotacao', 
+                'optRuido', 'optFantasma', 'optVinheta', 'optMescla', 
+                'optVelocidade', 'optPitch', 'optEQ', 'optEco', 'optInversaoAudio', 
+                'optAudioFundo', 'optMetadados', 'optFPS', 'optCorte'
+            ];
+            
+            options.forEach(opt => {
+                formData.append(opt, document.getElementById(opt).checked);
+            });
+
+            try {
+                const response = await fetch('/processar', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                clearInterval(progressInterval);
+
+                if(response.ok && data.sucesso) {
+                    progressBar.style.width = '100%';
+                    loadingSpinner.classList.add('hidden');
+                    statusText.textContent = "Destruído com Sucesso!";
+                    statusText.classList.replace('text-blue-400', 'text-green-400');
+                    statusText.classList.remove('animate-pulse');
+                    
+                    downloadLink.href = data.download_url;
+                    downloadLink.classList.remove('hidden');
+                    downloadLink.classList.add('flex');
+                    disclaimer.classList.remove('hidden');
+                } else {
+                    throw new Error(data.erro || 'Falha na renderização do FFmpeg.');
+                }
+            } catch (error) {
+                clearInterval(progressInterval);
+                loadingSpinner.classList.add('hidden');
+                progressBarContainer.classList.add('hidden');
+                statusText.classList.add('hidden');
+                errorText.textContent = "Erro: " + error.message;
+                errorText.classList.remove('hidden');
+                submitBtn.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
